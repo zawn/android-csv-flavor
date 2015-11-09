@@ -1,8 +1,5 @@
 import org.apache.commons.io.IOUtils
 
-group 'com.house365.build'
-version '1.0.3-SNAPSHOT'
-
 apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -18,6 +15,8 @@ buildscript {
     }
     dependencies {
         classpath 'commons-io:commons-io:1.4'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4"
     }
 }
 
@@ -39,7 +38,6 @@ dependencies {
         // 仅使用该包中的文件编码识别功能,无需导入其他依赖.
         exclude module: '*'
     }
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 def isReleaseBuild() {
@@ -131,12 +129,15 @@ artifacts {
     archives javadocJar
 }
 
+group 'com.house365.build'
+version '1.0.3'
+
 task writeNewPom << {
     pom {
         project {
-//            groupId 'com.house365.build'
-//            artifactId 'tools'
-            version '1.1'
+            groupId 'com.house365.build'
+            artifactId 'android-csv-variants'
+            version '1.0.3'
 
             inceptionYear '2015'
             licenses {
@@ -152,4 +153,22 @@ task writeNewPom << {
 
 task listJars << {
     configurations.compile.each { File file -> println file.name }
+}
+
+
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = project.hasProperty('bintray_username') ? project.property('bintray_username') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintray_api_key') ? project.property('bintray_api_key') : System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        repo = 'maven'
+        name = 'android-csv-variants'
+        desc = 'Bintray aar publishing example'
+        licenses = ['Apache-2.0']
+        labels = ['csv', 'android']
+        publicDownloadNumbers = true
+    }
 }
