@@ -1,3 +1,6 @@
+
+ [ ![Download](https://api.bintray.com/packages/zhangzhenli/maven/android-csv-variants/images/download.svg) ](https://bintray.com/zhangzhenli/maven/android-csv-variants/_latestVersion)
+ 
 ## 目的
 用于在Android Gradle构建时通过CSV文件配置Variants.简单的说就是通过CSV文件配置渠道包,或者Android Studio 分渠道打包.
  
