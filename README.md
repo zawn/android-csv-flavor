@@ -1,5 +1,6 @@
+# android-csv-variants
 
- [ ![Download](https://api.bintray.com/packages/zhangzhenli/maven/android-csv-variants/images/download.svg) ](https://bintray.com/zhangzhenli/maven/android-csv-variants/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/zhangzhenli/maven/android-csv-variants/images/download.svg) ](https://bintray.com/zhangzhenli/maven/android-csv-variants/_latestVersion)
  
 ## 目的
 用于在Android Gradle构建时通过CSV文件配置Variants.简单的说就是通过CSV文件配置渠道包,或者Android Studio 分渠道打包.
@@ -20,7 +21,7 @@
 
     在buildscript中添加依赖:
     ``` groovy
-    classpath 'com.house365.build:tools:1.0.3'
+    classpath 'com.house365.build:android-csv-variants:1.0.3'
     ```
     最终效果可能如下格式:
     ``` groovy
@@ -30,7 +31,7 @@
         }
         dependencies {
             classpath 'com.android.tools.build:gradle:1.3.1'
-            classpath 'com.house365.build:tools:1.0.3'
+            classpath 'com.house365.build:android-csv-variants:1.0.3'
     
             // NOTE: Do not place your application dependencies here; they belong
             // in the individual module build.gradle files
