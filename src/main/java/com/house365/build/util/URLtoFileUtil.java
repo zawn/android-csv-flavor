@@ -30,8 +30,12 @@ import java.net.URL;
  */
 public class URLtoFileUtil {
 
-    public static File toFile(URL url) throws IOException {
-        File tempFile = File.createTempFile("gradle_channels", ".tmp");
+    public static File toFile(URL url, File parentFile) throws IOException {
+
+        File tempFile = new File(parentFile, "android_variant.csv.tmp");
+        if (tempFile.exists()) {
+            tempFile.delete();
+        }
         IOUtils.copy(url.openStream(), new FileOutputStream(tempFile));
         tempFile.deleteOnExit();
         System.out.println("Copy: " + url + "\n to: " + tempFile);
