@@ -28,12 +28,16 @@ import org.gradle.tooling.BuildException
  */
 public class VariantsUtil {
 
+    static LinkedHashMap<String, LinkedHashMap<String, String>> readVariantsFromFile(Project project) {
+        return readVariantsFromFile(project,1);
+    }
+
     /**
      * 初始化字段buildVariants.
      * 首先尝试获取属性Property variantFileURL指定的URL,不存在则使用当前projectDIr下的variant.csv文件,
      *
      */
-    static LinkedHashMap<String, LinkedHashMap<String, String>> readVariantsFromFile(Project project) {
+    static LinkedHashMap<String, LinkedHashMap<String, String>> readVariantsFromFile(Project project, Integer i) {
         def preMillis = System.currentTimeMillis();
         LinkedHashMap<String, ArrayList<LinkedHashMap<String, String>>> buildVariants = new LinkedHashMap<>()
         File file
@@ -41,7 +45,7 @@ public class VariantsUtil {
             String variantFileURL = project.getProperties().get("variantFileURL")
             try {
                 URL url = new URL(variantFileURL)
-                file = URLtoFileUtil.toFile(new URL(variantFileURL))
+                file = URLtoFileUtil.toFile(url, project.buildDir)
             } catch (MalformedURLException e) {
                 file = new File(variantFileURL);
                 if (!file.isAbsolute())
@@ -57,7 +61,7 @@ public class VariantsUtil {
 
         project.logger.lifecycle("Variants File :" + file.toPath().toAbsolutePath().toString())
 
-        ArrayList<LinkedHashMap<String, String>> channels = CsvUtil.readCsvChannels(file, 2)
+        ArrayList<LinkedHashMap<String, String>> channels = CsvUtil.readCsvChannels(file, i)
         channels = checkFlavorName(project, channels)
         for (LinkedHashMap<String, String> variant : channels) {
             String flavorName = variant.get("flavorName");
@@ -99,7 +103,7 @@ public class VariantsUtil {
                 if (channel.containsKey("name")) {
                     flavorName = channel.get("name")
                 } else {
-                    flavorName = channel.values().getAt(0)
+                    flavorName = channel.values().getAt(1)
                 }
             }
             flavorName = HanziToPinyin.toPinYin(flavorName);

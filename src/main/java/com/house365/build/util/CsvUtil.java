@@ -27,7 +27,7 @@ import java.util.*;
 /**
  * 读取渠道配置文件并返回.
  * <p>
- * Created by Administrator on 2015/8/18.
+ * Created by ZhangZhenli on 2015/8/18.
  */
 public class CsvUtil {
 
